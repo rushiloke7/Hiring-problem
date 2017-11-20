@@ -91,6 +91,11 @@ def printFinalCandidates(finalcandidates, noOfCandidates):
     for row in finalcandidates[:5]:
         print("ID:", row[0], "| Score:",row[-1])
 
+def getColumnNames(candidates):
+    columnHeader = candidates[0]
+    columnHeader.append("Score")
+    return columnHeader
+
 
 if __name__ == '__main__':
     #convert csv data to list
@@ -116,3 +121,10 @@ if __name__ == '__main__':
 
     #presents the final selected candidates to the user
     printFinalCandidates(finalcandidates, noOfCandidates)
+
+    columnHeader = getColumnNames(candidates)
+    with open("Output.csv", "w") as outputFile:
+        write = csv.writer(outputFile)
+        write.writerows(columnHeader)
+        write.writerows(finalcandidates[:noOfCandidates])
+    outputFile.close()
