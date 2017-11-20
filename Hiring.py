@@ -3,6 +3,60 @@ import pprint
 import random
 from operator import itemgetter
 
+# data = ConvertCsv()
+# candidates = data.getList()
+# print(candidates)
+
+#list of global variables:
+
+
+def addZero(candidates):
+    count = -1
+    for row in candidates:
+        count += 1
+        candidates[count].append(0)
+    print(candidates)
+    return candidates
+
+
+def dataToBinary(rawCsvData=None):
+
+    wPercentage                 = 64
+    wBacklog                    = 32
+    wLocation                   = 16
+    wLanguage                   = 8
+    wExp                        = 4
+    wCertificate                = 2
+    wPH                         = 1
+
+    columnHeader = rawCsvData[0]
+    print(columnHeader)
+    rows = rawCsvData[1:]
+    pprint.pprint(rows)
+    #incomplete function
+
+
+def processRawData(rawCsvData=None):
+    # experinceScore = 0.3*4
+    # candidateScore = experinceScore + percentageScore - backlogScore
+    columnHeader = rawCsvData[0]
+    rows         = rawCsvData[1:]
+    availableCandidateList = []
+    data = {}
+    candidatesList = []
+    #ListData Store the FinalData to be returned from this function
+    ListData = []
+    ListData.append(columnHeader)
+
+    for candidateDetails in rows:
+        for i in range(0,len(candidateDetails)):
+            data[columnHeader[i]] = candidateDetails[i]
+        candidatesList.append(data)
+        data = {}
+    ListData.append(candidatesList)
+
+    return ListData
+
 def picRandomCandidates(candidates, noOfCandidates):
     #It will generate random candidates and return their details while storing them in a List
     selected = 0
@@ -79,40 +133,33 @@ def addWeight(candidateList, noOfCriateria):
         #reset value back to 0
         score = passedCriterias = 0
 
-    # pprint.pprint(passedcandidates)
-    return passedcandidates
+    pprint.pprint(passedcandidates)
 
 def sortCandidates(candidates):
     sorted(candidates,key=lambda x:x[8], reverse=True)
 
 
-def printFinalCandidates(finalcandidates, noOfCandidates):
-    print("Final candidates that are Selected are:")
-    for row in finalcandidates[:5]:
-        print("ID:", row[0], "| Score:",row[-1])
 
 
 if __name__ == '__main__':
-    #convert csv data to list
+
     data = ConvertCsv()
     candidates = data.getList()
-
-    selected_candidates_id = []         #stores IDs of the candidates that are selected to avoid dublication
-    selectedCandidates = []             #contains the randomly selected candidates in each iteration
-
-    noOfCandidates = int(input("Enter the number of candidates you want to select:"))
-    noOfCriateria = int(input("Enter the number of Criterias:"))
-    noOfIterations = int(input("How many times do you want to iterate the list: (default is 3): "))
-
-    #iterates 3 times and picks random candidate each time
-    for i in range(0,noOfIterations):
-        for row in (picRandomCandidates(candidates, noOfCandidates)):
+    # pprint.pprint(candidates)
+    selected_candidates_id = []
+    selectedCandidates = []
+    for i in range(0,3):
+        for row in (picRandomCandidates(candidates, 5)):
             selectedCandidates.append(row)
+    pprint.pprint(selectedCandidates)
 
-    #adds socre to the selected candidates
-    finalcandidates = addWeight(selectedCandidates, noOfCriateria)
-    #sorts final seleted candidates into decreasing order of their score.
+    finalcandidates = addWeight(selectedCandidates, 3)
+    pprint.pprint(finalcandidates)
     finalcandidates = sorted(finalcandidates,key=lambda l:l[8], reverse=True)
+    pprint.pprint(finalcandidates)
 
-    #presents the final selected candidates to the user
-    printFinalCandidates(finalcandidates, noOfCandidates)
+
+    #addWeight(candidates, 4)
+
+    #ListData = processRawData(candidates)
+    # pprint.pprint(ListData)
