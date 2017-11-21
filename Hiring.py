@@ -1,6 +1,7 @@
 from ConvertCsv import ConvertCsv
 import pprint
 import random
+import csv
 from operator import itemgetter
 
 def picRandomCandidates(candidates, noOfCandidates):
@@ -83,22 +84,25 @@ def addWeight(candidateList, noOfCriateria):
     return passedcandidates
 
 def sortCandidates(candidates):
+    #Sorts the candidates into decreasing order.
     sorted(candidates,key=lambda x:x[8], reverse=True)
 
 
 def printFinalCandidates(finalcandidates, noOfCandidates):
+    #print the final selected candidates back to console.
     print("Final candidates that are Selected are:")
     for row in finalcandidates[:5]:
         print("ID:", row[0], "| Score:",row[-1])
 
 def getColumnNames(candidates):
+    #returns column headers
     columnHeader = candidates[0]
-    columnHeader.append("Score")
+    columnHeader.append('Score')
     return columnHeader
 
 
 if __name__ == '__main__':
-    #convert csv data to list
+    #converts csv data to list
     data = ConvertCsv()
     candidates = data.getList()
 
@@ -122,9 +126,9 @@ if __name__ == '__main__':
     #presents the final selected candidates to the user
     printFinalCandidates(finalcandidates, noOfCandidates)
 
+    #get list of headers
     columnHeader = getColumnNames(candidates)
-    with open("Output.csv", "w") as outputFile:
-        write = csv.writer(outputFile)
-        write.writerows(columnHeader)
-        write.writerows(finalcandidates[:noOfCandidates])
-    outputFile.close()
+
+    #Write the data of selected candidates into an output csv file.
+    data.listToCsv("Output.csv", columnHeader, finalcandidates[:noOfCandidates])
+    print("Succesfully written to the file: Output.csv")
