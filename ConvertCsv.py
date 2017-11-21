@@ -18,3 +18,10 @@ class ConvertCsv:
             intDataList.append(list(map(int, row)))
 
         return intDataList
+
+    def listToCsv(self, fileName, columnHeader, columnData):
+        with open(fileName, "w") as outputFile:
+            write = csv.writer(outputFile)
+            write.writerow(columnHeader)
+            write.writerows(columnData)
+        outputFile.close()
