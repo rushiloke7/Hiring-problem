@@ -3,7 +3,7 @@ import pprint
 import random
 import csv
 from operator import itemgetter
-
+#jobless
 def picRandomCandidates(candidates, noOfCandidates):
     #It will generate random candidates and return their details while storing them in a List
     selected = 0
